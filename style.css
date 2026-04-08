@@ -86,15 +86,8 @@ th, td {
     cursor: pointer;
     border-radius: 4px;
     font-size: 12px;
-    transition: all 0.3s ease;
     box-shadow: 0 1px 4px rgba(231, 76, 60, 0.4);
     margin-left: 10px;
-}
-
-.delete-btn:hover {
-    background: #c0392b;
-    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.6);
-    transform: scale(1.1);
 }
 
 #message {
