@@ -1,94 +1,122 @@
 body {
-    font-family: 'Courier New', monospace;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 20px;
     text-align: center;
-    background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
-    color: #00ff88;
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+    color: #e2e8f0;
     min-height: 100vh;
+    animation: fadeInBody 1.5s ease-in;
+}
+
+@keyframes fadeInBody {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 h1 {
-    color: #00ff88;
-    text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88;
+    color: #ffffff;
     font-size: 2.5em;
     margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+    animation: fadeIn 1s ease-in 0.5s both;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 button {
     padding: 15px 30px;
     font-size: 18px;
     margin-bottom: 20px;
-    background: linear-gradient(45deg, #00ff88, #00ffff);
-    color: #000;
-    border: 2px solid #00ff88;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    border: none;
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 0 20px #00ff88;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    animation: fadeIn 1s ease-in 1s both;
 }
 
 button:hover {
-    background: linear-gradient(45deg, #00ffff, #00ff88);
-    box-shadow: 0 0 30px #00ff88, 0 0 40px #00ffff;
-    transform: scale(1.05);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    transform: translateY(-3px);
 }
 
 #map {
     height: 400px;
     width: 100%;
     margin-bottom: 20px;
-    border: 2px solid #00ff88;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #00ff88;
+    border: 2px solid #4c5fd5;
+    border-radius: 15px;
+    background: #1e1e2f;
+    box-shadow: 0 0 20px rgba(76, 95, 213, 0.3);
+    animation: fadeIn 1s ease-in 1.5s both;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    border: 2px solid #00ff88;
-    border-radius: 10px;
+    background: #2a2a3e;
+    border: 2px solid #4c5fd5;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 0 20px #00ff88;
+    box-shadow: 0 0 20px rgba(76, 95, 213, 0.3);
+    animation: fadeIn 1s ease-in 2s both;
 }
 
 th, td {
-    border: 1px solid #00ff88;
-    padding: 12px;
+    border: 1px solid #3a3a5e;
+    padding: 15px;
     text-align: center;
-    color: #00ff88;
-}
-
-th {
-    background: linear-gradient(45deg, #00ff88, #00ffff);
-    color: #000;
-    font-weight: bold;
-    text-shadow: none;
-}
-
-tr:nth-child(even) {
-    background: rgba(0, 255, 136, 0.1);
-}
-
-tr:hover {
-    background: rgba(0, 255, 136, 0.2);
+    color: #e2e8f0;
+    font-size: 16px;
 }
 
 .delete-btn {
-    background: linear-gradient(45deg, #ff0040, #ff4080);
-    color: white;
-    border: 1px solid #ff0040;
-    padding: 8px 12px;
+    background: #e74c3c;
+    color: #ffffff;
+    border: none;
+    padding: 4px 6px;
     cursor: pointer;
-    border-radius: 5px;
-    box-shadow: 0 0 10px #ff0040;
+    border-radius: 4px;
+    font-size: 12px;
     transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(231, 76, 60, 0.4);
+    margin-left: 10px;
 }
 
 .delete-btn:hover {
-    background: linear-gradient(45deg, #ff4080, #ff0040);
-    box-shadow: 0 0 20px #ff0040, 0 0 30px #ff4080;
+    background: #c0392b;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.6);
     transform: scale(1.1);
+}
+
+#message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(231, 76, 60, 0.9);
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
+    z-index: 1000;
+    animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
 }

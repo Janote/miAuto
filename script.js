@@ -59,15 +59,15 @@ function addTableRow(loc, index) {
     const tbody = document.querySelector('#historial tbody');
     const row = tbody.insertRow();
     row.insertCell(0).textContent = loc.date;
-    row.insertCell(1).textContent = loc.address;
-    const deleteCell = row.insertCell(2);
+    const addressCell = row.insertCell(1);
+    addressCell.textContent = loc.address;
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = '🗑️';
     deleteBtn.className = 'delete-btn';
     deleteBtn.onclick = function() {
         deleteLocation(index);
     };
-    deleteCell.appendChild(deleteBtn);
+    addressCell.appendChild(deleteBtn);
 }
 
 document.getElementById('guardarUbicacion').addEventListener('click', async function() {
@@ -79,10 +79,20 @@ document.getElementById('guardarUbicacion').addEventListener('click', async func
         const position = await new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resolve, reject);
         });
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
+        const lat = Math.round(position.coords.latitude * 10000) / 10000;
+        const lng = Math.round(position.coords.longitude * 10000) / 10000;
+        const now = new Date();
+        const recentLocation = locations.find(loc => {
+            const locDate = new Date(loc.date);
+            const timeDiff = (now - locDate) / (1000 * 60); // minutes
+            return Math.round(loc.lat * 10000) / 10000 === lat && Math.round(loc.lng * 10000) / 10000 === lng && timeDiff < 10;
+        });
+        if (recentLocation) {
+            showMessage('Esta ubicación ya ha sido seleccionada');
+            return;
+        }
         const address = await getAddress(lat, lng);
-        const date = new Date().toLocaleString();
+        const date = now.toLocaleString();
         const loc = { lat, lng, date, address };
         locations.push(loc);
         localStorage.setItem('locations', JSON.stringify(locations));
@@ -92,6 +102,16 @@ document.getElementById('guardarUbicacion').addEventListener('click', async func
         alert('Error obteniendo ubicación');
     }
 });
+
+function showMessage(text) {
+    const message = document.createElement('div');
+    message.id = 'message';
+    message.textContent = text;
+    document.body.appendChild(message);
+    setTimeout(() => {
+        document.body.removeChild(message);
+    }, 3000);
+}
 
 function deleteLocation(index) {
     map.removeLayer(markers[index]);
