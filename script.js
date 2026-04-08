@@ -20,7 +20,7 @@ function initMap() {
             const lng = position.coords.longitude;
             map.setView([lat, lng], 13);
             const address = await getAddress(lat, lng);
-            L.marker([lat, lng]).addTo(map).bindPopup(`Ubicación Actual: ${address}`).openPopup();
+            addMarker(lat, lng, 'Actual', address, true, -1);
         });
     }
 }
@@ -45,13 +45,24 @@ function loadHistory() {
     markers = [];
 
     locations.forEach((loc, index) => {
-        addMarker(loc.lat, loc.lng, loc.date, loc.address);
+        addMarker(loc.lat, loc.lng, loc.date, loc.address, false, index);
         addTableRow(loc, index);
     });
 }
 
-function addMarker(lat, lng, date, address) {
-    const marker = L.marker([lat, lng]).addTo(map).bindPopup(`Guardada: ${date} - ${address}`);
+function addMarker(lat, lng, date, address, isCurrent, index) {
+    let marker;
+    if (isCurrent) {
+        marker = L.marker([lat, lng]).addTo(map).bindPopup(`Ubicación Actual: ${address}`).openPopup();
+    } else {
+        const icon = L.divIcon({
+            html: `<div style="background: #667eea; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid #4c5fd5;">${index + 1}</div>`,
+            className: 'custom-marker',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+        });
+        marker = L.marker([lat, lng], { icon }).addTo(map).bindPopup(`Guardada: ${date} - ${address}`);
+    }
     markers.push(marker);
 }
 
@@ -96,7 +107,7 @@ document.getElementById('guardarUbicacion').addEventListener('click', async func
         const loc = { lat, lng, date, address };
         locations.push(loc);
         localStorage.setItem('locations', JSON.stringify(locations));
-        addMarker(lat, lng, date, address);
+        addMarker(lat, lng, date, address, false, locations.length - 1);
         addTableRow(loc, locations.length - 1);
     } catch (e) {
         alert('Error obteniendo ubicación');

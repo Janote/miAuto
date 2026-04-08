@@ -120,3 +120,8 @@ th, td {
     90% { opacity: 1; }
     100% { opacity: 0; }
 }
+
+.custom-marker {
+    background: transparent !important;
+    border: none !important;
+}
