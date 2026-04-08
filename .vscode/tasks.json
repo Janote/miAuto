@@ -1,0 +1,18 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Open in Browser",
+			"type": "shell",
+			"command": "xdg-open"
+		},
+		{
+			"label": "Open in Browser",
+			"type": "shell",
+			"command": "xdg-open",
+			"args": [
+				"index.html"
+			]
+		}
+	]
+}
