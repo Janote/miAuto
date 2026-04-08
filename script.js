@@ -69,8 +69,9 @@ function addMarker(lat, lng, date, address, isCurrent, index) {
 function addTableRow(loc, index) {
     const tbody = document.querySelector('#historial tbody');
     const row = tbody.insertRow();
-    row.insertCell(0).textContent = loc.date;
-    const addressCell = row.insertCell(1);
+    row.insertCell(0).textContent = index + 1;
+    row.insertCell(1).textContent = loc.date;
+    const addressCell = row.insertCell(2);
     addressCell.textContent = loc.address;
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = '🗑️';
