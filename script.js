@@ -1,6 +1,7 @@
 let map;
 let markers = [];
 let locations = JSON.parse(localStorage.getItem('locations')) || [];
+let currentLocation = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     initMap();
@@ -18,11 +19,17 @@ function initMap() {
         navigator.geolocation.getCurrentPosition(async function(position) {
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
-            map.setView([lat, lng], 13);
             const address = await getAddress(lat, lng);
-            addMarker(lat, lng, 'Actual', address, true, -1);
+            currentLocation = { lat, lng, address };
+            addCurrentLocationMarker();
+            map.setView([lat, lng], 13);
         });
     }
+}
+
+function addCurrentLocationMarker() {
+    if (!currentLocation) return;
+    addMarker(currentLocation.lat, currentLocation.lng, 'Actual', currentLocation.address, true, -1);
 }
 
 async function getAddress(lat, lng) {
@@ -48,12 +55,22 @@ function loadHistory() {
         addMarker(loc.lat, loc.lng, loc.date, loc.address, false, index);
         addTableRow(loc, index);
     });
+
+    if (currentLocation) {
+        addCurrentLocationMarker();
+    }
 }
 
 function addMarker(lat, lng, date, address, isCurrent, index) {
     let marker;
     if (isCurrent) {
-        marker = L.marker([lat, lng]).addTo(map).bindPopup(`Ubicación Actual: ${address}`).openPopup();
+        const currentIcon = L.divIcon({
+            html: `<div style="background: #2ecc71; color: white; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid #27ae60;">YO</div>`,
+            className: 'custom-marker',
+            iconSize: [28, 28],
+            iconAnchor: [14, 14]
+        });
+        marker = L.marker([lat, lng], { icon: currentIcon }).addTo(map).bindPopup(`Ubicación Actual: ${address}`).openPopup();
     } else {
         const icon = L.divIcon({
             html: `<div style="background: #667eea; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid #4c5fd5;">${index + 1}</div>`,
